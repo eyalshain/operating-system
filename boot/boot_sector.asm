@@ -21,24 +21,35 @@ bios_parameter_block:
 boot_start:
     mov [drive_number], dl  ;in bios dl is already set to the drive number.
 
-    mov si, msg_welcome
-    call print
+    mov si, msg_welcome_16     ;prints a welcome message
+    call print_string16
 
+    call switch_to_pm
+
+    jmp $
 
 %include "boot/diskRead(16bit).asm"
 %include "boot/print/print(16bit).asm"
 %include "boot/print/print(32bit)_pm.asm"
-%include "boot/gdt.asm"
-%include "boot/switch_to_pm.asm"
+%include "boot/protected_mode/gdt.asm"
+%include "boot/protected_mode/switch_to_pm.asm"
+
+
+[bits 32]
+
+;this is where we landed after switching to protected mode.
+start_protected_mode:
+    mov ebx, msg_welcome_pm
+    call print_string32         
+
+    jmp $                   ;hang.
 
 
 
-drive_number db 0x80 
 
-
-
-
-
+msg_welcome_16:  db  'Welcome! bobo OS is booting... ', 0
+msg_welcome_pm:  db  'Entered protected mode', 0
+drive_number:    db 0x80 
 
 
 times 510 - ($-$$) db 0
