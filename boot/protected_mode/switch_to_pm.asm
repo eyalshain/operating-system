@@ -32,3 +32,5 @@ init_pm:
     ;init stack-pointer at 0x9000
     mov ebp, 0x90000            
     mov esp, ebp
+
+    

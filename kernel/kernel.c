@@ -1,5 +1,5 @@
-void kmain(void);
+void main() {
+    char *video_memory = (char*) 0xb8000;
 
-void kmain(void) {
-
+    *video_memory = 'x';
 }

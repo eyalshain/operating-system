@@ -18,7 +18,7 @@ print_loop32:
     cmp al, 0                  ;if we reach the end of the string(null-terminator) 
     je done_print32            ;then done printing 
 
-    mov edx, [ax]              ;writing the 2 bytes(ascii and color) to video memory 
+    mov [edx], ax              ;writing the 2 bytes(ascii and color) to video memory 
 
     add ebx, 1                 ;increment ebx to move to the next character
     add edx, 2                 ;move to the next cell in video memory

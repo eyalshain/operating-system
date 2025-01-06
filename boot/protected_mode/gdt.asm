@@ -41,8 +41,8 @@ gdt_start:
         dw 0xFFFF       ;Limit(size)    bits(0-15)
         dw 0x0          ;base address   bits(0-15)  
         db 0x0          ;base address   bits(16-23)
-        db 10010010 b   ;1st flags , type flags
-        db 11001111 b   ;2nd flags , Limit ( bits 16 -19)
+        db 10010010b   ;1st flags , type flags
+        db 11001111b   ;2nd flags , Limit ( bits 16 -19)
         db 0x0          ;Base ( bits 24 -31)
 
 

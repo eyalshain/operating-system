@@ -24,6 +24,7 @@ boot_start:
     mov si, msg_welcome_16     ;prints a welcome message
     call print_string16
 
+    call load_kernel
     call switch_to_pm
 
     jmp $
@@ -34,20 +35,44 @@ boot_start:
 %include "boot/protected_mode/gdt.asm"
 %include "boot/protected_mode/switch_to_pm.asm"
 
+[bits 16]
 
-[bits 32]
 
-;this is where we landed after switching to protected mode.
-start_protected_mode:
+; load_kernel:
+;     mov al, 0       ;bootloader=first_sector.   kernel right after - second sector=lba 1.
+;     mov cl, 16      ;reading 16 sectors
+;     mov dl, [drive_number]
+;     mov bx, KERNEL_ADDRESS
+
+;     call disk_read
+;     ret 
+
+
+
+load_kernel:
+    mov dh, 16  
+    mov dl, [drive_number]
+    mov bx, KERNEL_ADDRESS
+
+    call disk_read
+    ret 
+
+
+[bits 32]   ;this is where we landed after switching to protected mode.
+welcome_protected_mode:
     mov ebx, msg_welcome_pm
     call print_string32         
+
+    call KERNEL_ADDRESS     ;give control to the kernel
 
     jmp $                   ;hang.
 
 
 
 
-msg_welcome_16:  db  'Welcome! bobo OS is booting... ', 0
+KERNEL_ADDRESS equ 0x1000
+
+msg_welcome_16:  db  'Welcome! starting booting at real mode... ', 0
 msg_welcome_pm:  db  'Entered protected mode', 0
 drive_number:    db 0x80 
 
@@ -56,5 +81,5 @@ times 510 - ($-$$) db 0
 dw 0xAA55
 
 
-times 256 dw 0xDADA
-times 256 dw 0xFACE
+;times 256 dw 0xDADA
+;times 256 dw 0xFACE
