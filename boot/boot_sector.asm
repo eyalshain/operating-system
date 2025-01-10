@@ -1,6 +1,7 @@
 [bits  16]
 [org 0x7c00]
 
+jmp short boot_start
 ;header - bios block parameter(BPB)
 bios_parameter_block:
     bdb_oem:                  db   'BOBO'              ; OEM identifier string
@@ -25,11 +26,15 @@ boot_start:
     call print_string16
 
     call load_kernel
-    call switch_to_pm
 
+    mov si, msg_loaded_kernel
+    call print_string16
+
+    call switch_to_pm
+    
     jmp $
 
-%include "boot/diskRead(16bit).asm"
+%include "boot/disk/diskRead(16bit).asm"
 %include "boot/print/print(16bit).asm"
 %include "boot/print/print(32bit)_pm.asm"
 %include "boot/protected_mode/gdt.asm"
@@ -50,12 +55,16 @@ boot_start:
 
 
 load_kernel:
-    mov dh, 16  
+    mov dh, 15  
     mov dl, [drive_number]
     mov bx, KERNEL_ADDRESS
 
     call disk_read
+
     ret 
+
+
+
 
 
 [bits 32]   ;this is where we landed after switching to protected mode.
@@ -72,6 +81,8 @@ welcome_protected_mode:
 
 KERNEL_ADDRESS equ 0x1000
 
+msg_after_protected_mode db 'after protected mode...', 0
+msg_loaded_kernel db 'kernel loaded', 0
 msg_welcome_16:  db  'Welcome! starting booting at real mode... ', 0
 msg_welcome_pm:  db  'Entered protected mode', 0
 drive_number:    db 0x80 

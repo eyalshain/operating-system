@@ -1,6 +1,9 @@
 [bits 16]
 
 switch_to_pm:   
+    mov si, before_pm
+    call print_string16
+
     cli                 ;disabling interrupts until we define the protected mode interrupts table,
                         ;so the cpu won't execute invalid - real mode interrupt.
 
@@ -16,7 +19,9 @@ switch_to_pm:
                                 ;to force the cpu to clear its cache of pre-fetched real mode instruction.
                                 ;that way the cpu doesn't try to execute real mode decoded instruction, which will cause problems.
 
-                                
+    
+
+
 
 [bits 32]                     
 
@@ -29,8 +34,17 @@ init_pm:
     mov fs, ax  
     mov gs, ax
 
+    
     ;init stack-pointer at 0x9000
     mov ebp, 0x90000            
     mov esp, ebp
 
+    ret ;test
+
+    mov ebx, after_pm
+    call print_string32
+
+    call welcome_protected_mode
     
+before_pm   db 'Hi, before protected mode', 0
+after_pm    db 'Hi, after protected mode', 0

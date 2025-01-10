@@ -125,14 +125,14 @@ disk_read:
 
     ;unable to read from disk
     disk_error:
-        push disk_error_msg
+        mov si, disk_error_msg
         call print_string16
         add sp, 2
         jmp read_end
 
     ;not read all sectors
     read_error:
-        push read_error_msg
+        mov si, read_error_msg
         call print_string16
         add sp, 2
         jmp read_end
