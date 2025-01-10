@@ -26,7 +26,7 @@ switch_to_pm:
 [bits 32]                     
 
 init_pm:
-
+    [bits 32]
     mov ax, DATA_SEGMENT        ;updating all of segments register 
     mov ds, ax                  ;to the data selector we defined in the GDT.
     mov ss, ax
