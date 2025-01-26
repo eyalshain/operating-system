@@ -1,7 +1,14 @@
 C_SOURCE = $(wildcard kernel/*.c  drivers/*.c)
 HEADERS = $(wildcard kernel/*.h drivers/*.h)
 
+CROSS_COMPILER = /usr/local/cross/bin/i386-elf
 OBJ = ${C_SOURCE:.c=.o}	
+
+
+CC = $(CROSS_COMPILER)-gcc
+LD = $(CROSS_COMPILER)-ld
+GDB = $(CROSS_COMPILER)-gdb 
+
 
 
 run: all
@@ -15,7 +22,7 @@ os_image.bin: boot/boot_sector.bin kernel.bin
 
 #linking the kernel
 kernel.bin: boot/kernel_entry.o ${OBJ}
-	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
+	$(LD) -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
 
 
 #rule to build the boot sector in the boot folder
@@ -30,7 +37,7 @@ boot/kernel_entry.o: boot/kernel_entry.asm
 
 
 %.o : %.c ${HEADERS}
-	gcc -g -ffreestanding -m32 -fno-pic -c $< -o $@
+	$(CC) -g -ffreestanding -m32 -fno-pic -c $< -o $@
 
 %.o : %.asm
 	nasm $< -f elf32 -o $@

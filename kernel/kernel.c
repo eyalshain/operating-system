@@ -1,22 +1,12 @@
 void kmain() {
-    char *video_memory = (char*) 0xb8000;
-    char *message = "Hello Eyal! ";
-    char message2[] = "Hello Eyal! ";
+    char *video_memory = (char*) 0xb802E;
+    char *message = "  Hello kernel! ";
 
-    // while (*message)
-    // {
-    //     *video_memory = *message;
-    //     video_memory += 2;
-    //     message++;
-    // }
-
-    for (int i = 0; message2[i] != '\0'; i++)
+    while (*message)
     {
-        *video_memory = message2[i];
+        *video_memory = *message;
         video_memory += 2;
+        message += 1;
     }
-    
 
-
-    // *video_memory = 'G';
 }

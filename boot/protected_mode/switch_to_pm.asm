@@ -36,13 +36,8 @@ init_pm:
 
     
     ;init stack-pointer at 0x9000
-    mov ebp, 0x90000            
+    mov ebp, 0x90000           
     mov esp, ebp
-
-    ret ;test
-
-    mov ebx, after_pm
-    call print_string32
 
     call welcome_protected_mode
     
