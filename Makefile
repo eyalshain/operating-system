@@ -1,5 +1,5 @@
-C_SOURCE = $(wildcard kernel/*.c  drivers/*.c)
-HEADERS = $(wildcard kernel/*.h drivers/*.h)
+C_SOURCE = $(wildcard kernel/*.c  drivers/src/*.c drivers/src/*.c libc/src/*.c)
+HEADERS = $(wildcard kernel/*.h drivers/include/*.h libc/include/*.h)
 
 CROSS_COMPILER = /usr/local/cross/bin/i386-elf
 OBJ = ${C_SOURCE:.c=.o}	
