@@ -83,7 +83,7 @@ KERNEL_ADDRESS equ 0x1000
 msg_after_protected_mode: db 'after protected mode', 0
 msg_loaded_kernel db 'kernel loaded', 0
 msg_welcome_16:  db  'Welcome! starting booting at real mode... ', 0
-msg_welcome_pm:  db  'Entered protected mode', 0
+msg_welcome_pm:  db  'Entered protected mode ', 0
 drive_number:    db 0x80 
 
 

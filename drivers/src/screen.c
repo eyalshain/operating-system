@@ -25,6 +25,7 @@ void print_at (char *message, int row, int col)
         offset = print_char(message[i], row, col, WHITE_ON_BLACK);
         row = get_rows_offset(offset);
         col = get_columns_offset(offset);
+        i++;
     }
 
 }
@@ -100,9 +101,9 @@ int handle_scrolling (int cursor_offset)
             COLUMNS * 2
         );
     }
-
+    
     //clear the last row 
-    char *last_row = (char *)get_screen_offset(0, ROWS - 1);
+    char *last_row = VIDEO_MEMORY_LOCATION + (char *)get_screen_offset(0, ROWS - 1);
     for (int i = 0; i < COLUMNS * 2; i++)
     {
         last_row[i*2] = 0; //ascii code 0 for each character
@@ -148,7 +149,7 @@ int get_cursor_offset ()
     
     //multiplying the offset by 2, since each character cell is 2 bytes in the vga text mode.
     offset *= 2;    
-
+    return offset;
 }
 
 void set_cursor_offset (int offset)

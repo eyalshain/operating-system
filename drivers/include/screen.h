@@ -1,7 +1,10 @@
 // video memory starts at 0xb8000, but since we already wrote the pm message at that address, we'll start writing now at a little further address.
-#define VIDEO_MEMORY_LOCATION 0xb8050
+//each row is 80 columns, and each cell is two byte, so to calclate the second row:
+//0xb8000 + 80*2 = 0xb80A0
+#define VIDEO_MEMORY_LOCATION 0xb80A0
 
-#define ROWS 25
+//#define ROWS 25
+#define ROWS 24
 #define COLUMNS 80
 
 // define the byte for the default color scheme.
@@ -21,7 +24,7 @@ int print_char (char character, int row, int col, int attribute_byte);
 int get_cursor_offset ();
 void set_cursor_offset (int offset);
 void clear_screen ();
-//int handle_scrolling (int cursor_offset);
+int handle_scrolling (int cursor_offset);
 //void next_line();
 
 
