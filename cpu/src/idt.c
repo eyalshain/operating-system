@@ -1,5 +1,10 @@
 #include "../include/idt.h"
 
+__attribute__((aligned (0x10)))
+idt_entry idt[IDT_ENTRIES];
+idt_descriptor idt_ptr;
+
+//function to set an entry in the idt(for a specific interrupt handler)
 void idt_set_gate(int index, u32bit base, u16bit selector, u8bit reserved, u8bit flags)
 {
     idt[index].offset_low = (base & 0xFFFF);    //takes the low 16 bits

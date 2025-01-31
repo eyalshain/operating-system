@@ -1,7 +1,7 @@
 #ifndef IDT_H
 #define IDT_H
 
-#include "types.h"
+#include "../types.h"
 
 #define IDT_ENTRIES 256
 #define KERNEL_CS 0x08          //code segment, index 1 in the GDT(value 0x08)
@@ -18,16 +18,12 @@ typedef struct __attribute__((packed)) {        //__attribute__((packed)) ensure
 } idt_entry;
 
 
-//idt_descriptor - tells the cpu where the idt is and its size.
+//idt_descriptor - tells the cpu where the idt is and its size. the cpu uses the register idtr to know where is the idt.
 typedef struct __attribute__((packed)) {
     u16bit limit;   //size of the idt
     u32bit base;    //base address of the idt
-} idtr_t; 
+} idt_descriptor; 
 
-//defining the idt array and the idt pointer
-__attribute__((aligned (0x10)))
-idt_entry idt[IDT_ENTRIES];
-idtr_t idt_ptr;
 
 
 void idt_set_gate(int index, u32bit base, u16bit selector, u8bit reserved, u8bit flags);
