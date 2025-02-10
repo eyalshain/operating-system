@@ -17,8 +17,8 @@
 
 
 
-void print (char *message);
-void print_at (char *message, int row, int col);
+void print (const char *message);
+void print_at (const char *message, int row, int col);
 
 int print_char (char character, int row, int col, int attribute_byte);
 int get_cursor_offset ();

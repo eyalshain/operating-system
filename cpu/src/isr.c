@@ -5,7 +5,7 @@
 
 //char* exceptions_names[32];
 
-char* exceptions_names[32] = {
+const char* exceptions_names[32] = {
     "division by zero",
     "debug exception",
     "non-maskable interrupt",
@@ -85,7 +85,7 @@ void isr_install()
 
 
 void isr_handler(u32bit entry) {
-    char *name = exceptions_names[entry];
+    const char *name = exceptions_names[entry];
 
     print("\nEncountered a exception: \n");
     print(name);

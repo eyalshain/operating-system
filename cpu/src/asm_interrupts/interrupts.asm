@@ -15,7 +15,7 @@ global irq13
 global irq14
 global irq15
 
-
+[extern irq_common_stub]
 ;ISRS for hardware interrupts
 
 irq0:

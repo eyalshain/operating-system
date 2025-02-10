@@ -29,7 +29,7 @@ os_image.bin: boot/boot_sector.bin kernel.bin
 
 # Linking the kernel
 kernel.bin: boot/kernel_entry.o ${OBJ}
-	$(LD) -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
+	$(LD) -m elf_i386  -T linker.ld -o $@  $^ --oformat binary
 
 # used for debugging
 kernel.elf: boot/kernel_entry.o ${OBJ}
@@ -54,7 +54,7 @@ boot/kernel_entry.o: boot/kernel_entry.asm
 # Clean build artifacts
 clean:
 	rm -fr build/*.bin build/*.o *.bin *.o os_image
-	rm -fr kernel/*.o boot/*.bin boot/*.o drivers/src/*.o cpu/src/*.o cpu/src/asm_interrupts/*.o
+	rm -fr kernel/*.o boot/*.bin boot/*.o drivers/src/*.o cpu/src/*.o cpu/src/asm_interrupts/*.o libc/src/*.o  kernel.elf
 
 # Debug target: build with debugging symbols and run QEMU with GDB support
 debug: CFLAGS=$(DEBUG_CFLAGS)

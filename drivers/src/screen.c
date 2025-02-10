@@ -4,7 +4,7 @@
 
 
 //this function prints a message to the screen at a given row and column using video memory.
-void print_at (char *message, int row, int col)
+void print_at (const char *message, int row, int col)
 {
     int offset;
 
@@ -31,7 +31,7 @@ void print_at (char *message, int row, int col)
 }
 
 //this function write to the screen at the cursor position.
-void print (char *message)
+void print (const char *message)
 {
     print_at(message, -1, -1);
 }

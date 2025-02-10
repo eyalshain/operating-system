@@ -4,11 +4,14 @@
 #include "../types.h"
 #include "../../drivers/include/memory_io.h"
 
+//void* interrupt_handerls[IRQS] = {0};
 
 //pic1: responsible for IRQ 0-7
 //pic2: responsible for IRQ 8-15
 void irq_remap()
 {   
+    //The master pic(pic1) has command port 0x20 and data port 0x21, while the 
+    //slave pic(pic2) has command port 0xA0 and data port 0xA1
     port_byte_out(0x20, 0x11);  //initialize pic1 
     port_byte_out(0x21, 32);    //set the base-vector for pic1 to 32 (0-7 -> 32-39).
 
@@ -50,7 +53,26 @@ void irq_install()
 
 }
 
-void irq_handler()
+void irq_handler(u32bit entry)
 {
+    int irq_number = entry - 32; //irqs in the idt start at offset 32.
 
+    switch (irq_number)
+    {
+    case 0:
+        //timer();
+        break;
+    
+    case 1:
+        //keyboard();
+        break;
+
+    default:
+        break;
+    }
+    
+    if (irq_number >= 8) {
+        port_byte_out(0xA0, 0x20);  //send an EOI (end of interrupt) to the slave(pic2) pic if the irq number is bigger than 7.
+    }
+    port_byte_out(0x20, 0x20);  //send an EOI to pic1 anyway, cause to indicate that it can process further interrupts (cause pic2 is connected to pic1).
 }

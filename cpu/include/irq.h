@@ -1,6 +1,10 @@
 #ifndef IRQ_H
 #define IRQ_H
 
+#include "../types.h"
+
+#define IRQS 16
+
 extern void irq0();
 extern void irq1();
 extern void irq2();
@@ -36,7 +40,7 @@ extern void irq15();
 #define IRQ15 47
 
 
-void irq_handler();
+void irq_handler(u32bit entry);
 void irq_install();
 void irq_remap();
 

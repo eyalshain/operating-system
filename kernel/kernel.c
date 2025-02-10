@@ -1,5 +1,6 @@
 #include "../drivers/include/screen.h"
 #include "../cpu/include/isr.h"
+#include "../libc/include/string.h"
 
 void division_by_zero();
 
@@ -17,13 +18,13 @@ void kmain() {
 
     //clear_screen();
     print_at("HI, Eyal :) what's up? ", 0, 0);
-    //print("this is so cool!!!");
+    //print("this is so cool!!!\n\n");
+
 
     isr_install();
     division_by_zero();
-    //print("Hi");
-
-
+    
+    
     /*
     clear_screen();
     //print_at("Hello, eyal!", 0, 0);
