@@ -1,4 +1,4 @@
-#**Operating system!**
+# **Operating system!**
 
 EyalOS is a lightweight operating system built from scratch, designed to run on x86 architectures. It features a custom bootloader, kernel, basic drivers, and interrupt handling, showcasing low-level programming and operating system development.
 
