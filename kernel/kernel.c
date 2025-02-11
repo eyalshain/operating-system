@@ -3,6 +3,7 @@
 #include "../libc/include/string.h"
 
 void division_by_zero();
+void welcome_msg();
 
 void kmain() {
      char *video_memory = (char*) 0xb802E;
@@ -16,28 +17,23 @@ void kmain() {
         message += 1;
     }
 
-    //clear_screen();
-    print_at("HI, Eyal :) what's up? ", 0, 0);
+    clear_screen();
+    //print_at("HI, Eyal :) what's up? ", 0, 0);
     //print("this is so cool!!!\n\n");
+
+    welcome_msg();
 
 
     isr_install();
     division_by_zero();
+
+    print("wow! we are back bro!");
     
     
+
+
+
     /*
-    clear_screen();
-    //print_at("Hello, eyal!", 0, 0);
-
-    for (int i = 0; i < 23; i++)
-    {
-        print_at("sup bro?", i, 0);
-    }
-    for (int i = 0; i < COLUMNS; i++)
-    {
-        print_at("a", 23, i);   //print a bunch of 'a' at the last row
-    }
-
     handle_scrolling(get_cursor_offset());
     print("Hi, bro:)");
     */
@@ -49,4 +45,20 @@ void division_by_zero()
     int num2 = 0;
     
     int result = num1 / num2;
+    print("\ndamn! surprised u got here...\n");
+}
+
+
+void welcome_msg()
+{
+    print("  +------------------------------------------------------+\n");
+    print("   |   [>         ] Booting... (10%)   |   .---.        | \n");  
+    print("   |   [==>       ] Loading... (30%)   |   |o_o |       | \n");  
+    print("   |   [====>     ] Almost...  (50%)   |   |:_/ |       | \n");  
+    print("   |   [========> ] ...        (80%)   |  //   \\ \\      | \n");  
+    print("   |   [=========>] Ready!     (100%)  |  (|     | )    | \n");  
+    print("   |                                   |  /'\\_ _/`\\     | \n");  
+    print("   |   Welcome to EyalOS!              |  \\__)=(__/     | \n"); 
+    print("   +-----------------------------------------------------+\n\n");
+
 }

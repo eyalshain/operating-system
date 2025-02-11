@@ -38,160 +38,161 @@ extern isr_common_stub
 
 isr0:
     cli                         ;disabling interrupts while handling the current one
-    push dword 0                ;pushing the interrupt vector number (entry in the idt) so that the cpu know which entry correspond to the exceptions 
+    add dword [esp], 3          ;since division usually takes 3 bytes, we need to adjust the EIP to not execute the same exception again.
+    push dword 0                ;Division by Zero (Divide error)
     jmp isr_common_stub 
 
 isr1:
     cli
-    push dword 1
+    push dword 1                ;Debug Exception
     jmp isr_common_stub
 
 isr2:
     cli
-    push dword 2
+    push dword 2                ;Non-Maskable Interrupt (NMI)
     jmp isr_common_stub
 
 isr3:
     cli
-    push dword 3
+    push dword 3                ;Breakpoint Exception
     jmp isr_common_stub
 
 isr4:
     cli
-    push dword 4
+    push dword 4                ;Overflow Exception (INTO instruction)
     jmp isr_common_stub
 
 isr5:
     cli
-    push dword 5
+    push dword 5                ;Bound Range Exceeded Exception
     jmp isr_common_stub
 
 isr6:
     cli
-    push dword 6
+    push dword 6                ;Invalid Opcode Exception (CPU can't understand the instruction)
     jmp isr_common_stub
     
 isr7:
     cli
-    push dword 7
+    push dword 7                ;Device Not Available Exception (FPU not available)
     jmp isr_common_stub
 
 isr8:
     cli
-    push dword 8
+    push dword 8                ;Double Fault Exception
     jmp isr_common_stub
 
 isr9:
     cli
-    push dword 9
+    push dword 9                ;Coprocessor Segment Overrun (reserved by Intel)
     jmp isr_common_stub
 
 isr10:
     cli
-    push dword 10
+    push dword 10               ;Invalid Task State Segment (TSS) exception
     jmp isr_common_stub
 
 isr11:
     cli
-    push dword 11
+    push dword 11               ;Segment Not Present Exception
     jmp isr_common_stub
 
 isr12:
     cli
-    push dword 12
+    push dword 12               ;Stack Segment Fault Exception
     jmp isr_common_stub
 
 isr13:
     cli
-    push dword 13
+    push dword 13               ;General Protection Fault
     jmp isr_common_stub
 
 isr14:
     cli
-    push dword 14
+    push dword 14               ;Page Fault Exception (Memory access violation)
     jmp isr_common_stub
 
 isr15:
     cli
-    push dword 15
+    push dword 15               ;Reserved Exception
     jmp isr_common_stub
 
 isr16:
     cli
-    push dword 16
+    push dword 16               ;x87 FPU Floating-Point Error
     jmp isr_common_stub
 
 isr17:
     cli
-    push dword 17
+    push dword 17               ;Alignment Check Exception
     jmp isr_common_stub
 
 isr18:
     cli
-    push dword 18
+    push dword 18               ;Machine Check Exception (hardware fault)
     jmp isr_common_stub
 
 isr19:
     cli
-    push dword 19
+    push dword 19               ;Reserved Exception
     jmp isr_common_stub
 
 isr20:
     cli
-    push dword 20
+    push dword 20               ;Reserved Exception
     jmp isr_common_stub
 
 isr21:
     cli
-    push dword 21
+    push dword 21               ;Reserved Exception
     jmp isr_common_stub
 
 isr22:
     cli
-    push dword 22
+    push dword 22               ;Reserved Exception
     jmp isr_common_stub
 
 isr23:
     cli
-    push dword 23
+    push dword 23               ;Reserved Exception
     jmp isr_common_stub
 
 isr24:
     cli                         
-    push dword 24
+    push dword 24               ;Reserved Exception
     jmp isr_common_stub
 
 isr25:
     cli
-    push dword 25
+    push dword 25               ;Reserved Exception
     jmp isr_common_stub
 
 isr26:
     cli
-    push dword 26
+    push dword 26               ;Reserved Exception
     jmp isr_common_stub
 
 isr27:
     cli
-    push dword 27
+    push dword 27               ;Reserved Exception
     jmp isr_common_stub
 
 isr28:
     cli
-    push dword 28
+    push dword 28               ;Reserved Exception
     jmp isr_common_stub
 
 isr29:
     cli
-    push dword 29
+    push dword 29               ;Reserved Exception
     jmp isr_common_stub
 
 isr30:
     cli
-    push dword 30
+    push dword 30               ;Reserved Exception
     jmp isr_common_stub
 
 isr31:
     cli
-    push dword 31
+    push dword 31               ;Reserved Exception
     jmp isr_common_stub
