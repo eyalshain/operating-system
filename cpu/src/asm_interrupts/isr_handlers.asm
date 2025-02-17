@@ -51,11 +51,12 @@ isr_common_stub:
 
 
 irq_common_stub:
-    pusha
-    
+    mov [tmp], eax
     mov eax, [esp]
-    mov [tmp], eax 
-
+    mov [entry], eax 
+    mov eax, [tmp]
+    
+    pusha
     push ds
     push es
     push fs
@@ -72,14 +73,15 @@ irq_common_stub:
 
     call irq_handler    ;isr_handler - c function
 
-    
-    pop eax
+    add esp, 4
     pop gs
     pop fs
     pop es
     pop ds
     
     popa
+
+    add esp, 4
 
     jmp $
     ;sti ;enabling interrupts

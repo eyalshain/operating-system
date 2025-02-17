@@ -82,10 +82,19 @@ int print_char (char character, int row, int col, int attribute_byte)
 }
 
 
+int handle_scrolling() {    //uses the cursor position automatically 
+    handle_scrolling(-1);
+}
 
-int handle_scrolling (int cursor_offset)
+//if the cursor is out of video memory, scroll one line and  delete the top line.
+int handle_scrolling_at (int cursor_offset)
 {
     int max_bytes = 2 * ROWS * COLUMNS;
+
+    if (cursor_offset < 0)  // use this in another function that doesn't get any parameter and automatically uses the cursor offset.
+    {
+        cursor_offset = get_cursor_offset();
+    }
 
     //if the cursor is still in the screen(didn't exceed the max bytes limit) return the cursor_offset unmodified
     if (cursor_offset < max_bytes) {
@@ -136,6 +145,22 @@ void clear_screen ()
 
     set_cursor_offset(get_screen_offset(0, 0));
 }
+
+int back_space()
+{
+    int offset = get_cursor_offset(); //current cursor offset
+    offset -= 2; //since each cell in video memory in 2 bytes, we gonna subtract form the offset 2, because we deleting the current char.
+
+    set_cursor_offset(offset);  //setting the offset
+
+    char *current_cell = (char *)VIDEO_MEMORY_LOCATION;
+
+    current_cell[offset] = ' '; //deleting the current cell, by placing ' ' char and a white on black.
+    current_cell[offset + 1] = WHITE_ON_BLACK;
+
+    return offset;
+}
+
 
 int get_cursor_offset ()
 {

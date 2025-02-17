@@ -24,7 +24,9 @@ int print_char (char character, int row, int col, int attribute_byte);
 int get_cursor_offset ();
 void set_cursor_offset (int offset);
 void clear_screen ();
-int handle_scrolling (int cursor_offset);
+int handle_scrolling_at (int cursor_offset);
+int handle_scrolling();
+int back_space();
 //void next_line();
 
 

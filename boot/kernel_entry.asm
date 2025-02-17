@@ -1,6 +1,11 @@
 ;having an entry point for kernel execution.
+global _start 
 [bits 32]
-[extern kmain]
 
-call kmain
-jmp $
+
+_start: 
+    [extern kmain]
+    call kmain
+    jmp $
+
+
