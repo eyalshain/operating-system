@@ -161,6 +161,38 @@ int back_space()
     return offset;
 }
 
+//move the cursor by 4 spaces.
+int tab()
+{
+    //getting the current cursor offset.
+    int offset = get_cursor_offset();
+    int cell = 2; //one cell = 2 bytes
+
+    offset += cell * 4;
+
+    set_cursor_offset(offset);
+    return offset;
+}
+
+//moves the cursor to the next line.
+int new_line()
+{
+    // getting the current cursor offset
+    int offset = get_cursor_offset();
+
+    int row = get_rows_offset(offset);
+    int column = 0;
+
+    row++; //to get to the next line, we want to column to be 0 and the row to be -> current row + 1
+
+    //calculate the new offset by the row and column we just calculated.
+    int new_offset = get_screen_offset(column, row); 
+
+    set_cursor_offset(new_offset);  //setting the current offset to be the new offset.
+
+    return offset;
+}
+
 
 int get_cursor_offset ()
 {

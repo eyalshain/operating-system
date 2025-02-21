@@ -3,6 +3,7 @@
 #include "../include/isr.h"
 #include "../types.h"
 #include "../../drivers/include/memory_io.h"
+#include "../../drivers/include/keyboard.h"
 
 //void* interrupt_handerls[IRQS] = {0};
 
@@ -64,7 +65,7 @@ void irq_handler(u32bit entry)
         break;
     
     case 1:
-        //keyboard();
+        keyboard_handler();
         break;
 
     default:

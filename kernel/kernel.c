@@ -20,9 +20,11 @@ void kmain() {
     welcome_msg();      //print welcome message
     isr_install();      //initialize ISRs
 
-    //division_by_zero();
+    division_by_zero();
 
+    
     print("wow! we are back bro!");
+
     
     
     //handle_scrolling();

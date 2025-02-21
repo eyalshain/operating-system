@@ -27,7 +27,8 @@ void clear_screen ();
 int handle_scrolling_at (int cursor_offset);
 int handle_scrolling();
 int back_space();
-//void next_line();
+int tab();
+int new_line();
 
 
 int get_screen_offset (int col, int row);

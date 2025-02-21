@@ -8,12 +8,14 @@ unsigned char port_byte_in (unsigned short port)
     //using inline assembly - dx is loaded with the port, al is assign the result value (the data from the port)
     unsigned char result;
     __asm__("in %%dx, %%al" : "=a" (result) : "d" (port));
+    return result;
 }
 
 unsigned char port_word_in (unsigned short port)
 {
     unsigned short result;
     __asm__("in %%dx, %%ax" : "=a" (result) : "d" (port));
+    return result;
 }
 
 
