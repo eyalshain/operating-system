@@ -39,3 +39,24 @@ int len_num(int num)
     }
     return len;
 }
+
+int strlen(char string[])
+{
+    int count = 0;
+    while (string[count] != '\0')
+    {
+        count++;
+    }
+
+    return count;
+}
+
+
+
+
+void append(char string[], char character)
+{
+    int len = strlen(string);
+    string[len] = character;
+    string[len+1] = '\0';
+}

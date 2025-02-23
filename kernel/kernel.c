@@ -23,9 +23,11 @@ void kmain() {
     division_by_zero();
 
     
-    print("wow! we are back bro!");
-
-    
+    //print("wow! we are back bro!");
+    char *string = "wow! we are back bro!\n";
+    print(string);
+    append(string, '?');
+    print(string);
     
     //handle_scrolling();
 }

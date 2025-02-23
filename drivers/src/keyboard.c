@@ -2,6 +2,13 @@
 #include "../include/memory_io.h"
 #include "../include/screen.h"
 
+//the break code of a key = scancode of a key + 0x80. for example: shift-sc=0x2A. shift-release: 2A + 0x80 = 0xAA
+#define RELEASE_CODE 0x80 //the release code is used for checking if a key was released. the byte 0xF0 IS SENT TO PORT 0X60 and then the scan code of the character is also sent to port 0x60
+
+#define CTRL_SCANCODE 0x1D
+#define ALT_SCANCODE 0x38
+#define SHIFT_SCANCODE 0x2A
+#define CAPSLOCK_SCANCODE 0x3A 
 
 #define BACKSPACE_SCANCODE 0x0E
 #define ENTER_SCANCODE 0x1C
@@ -10,11 +17,10 @@
 #define MAX_SCANCODE 58
 
 
-
 KeyEvent buffer[256] = {0}; //buffer to store all of the keys
 u8bit key_count; // keys counter
 
-char scancode_ascii[][2];   //scancode table. using this to convert scancodes into ascii characters.
+
 
 //keyboard state - ctrl, shift, alt, ...
 keyboard_state current_keyboard_state;
@@ -45,9 +51,38 @@ void keyboard_handler()
 
     else {
         //handle regular keys
-        char character = scancode_ascii[(int)scancode]; // gets the ascii code for the character using our scancode table.
-        print(character); //printing the character
+        //char character = scancode_ascii[(int)scancode]; // gets the ascii code for the character using our scancode table.
+        //print(character); //printing the character
 
     }
 
+}
+
+int update_keyboard_state(u8bit scancode)
+{
+
+    switch(scancode)
+    {
+    case CTRL_SCANCODE:
+        current_keyboard_state.is_ctrl_pressed = 1;
+        return 1;
+    
+    case SHIFT_SCANCODE:
+        current_keyboard_state.is_shift_pressed = 1;
+        return 1;
+    
+    case ALT_SCANCODE:
+        current_keyboard_state.is_alt_pressed = 1;
+        return 1;
+    
+    case CAPSLOCK_SCANCODE:
+        current_keyboard_state.is_capsLock_pressed = 1;
+    
+    default:
+        break;
+    }
+
+
+
+    
 }
