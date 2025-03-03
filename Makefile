@@ -1,4 +1,4 @@
-C_SOURCE = $(wildcard kernel/*.c  drivers/src/*.c drivers/src/*.c libc/src/*.c cpu/src/*.c)
+C_SOURCE = $(wildcard kernel/*.c  drivers/src/*.c libc/src/*.c cpu/src/*.c)
 HEADERS = $(wildcard kernel/*.h drivers/include/*.h libc/include/*.h cpu/include/*.h cpu/types.h)
 ASM_SOURCES = $(wildcard cpu/src/asm_interrupts/*.asm)
 

@@ -1,6 +1,9 @@
 #include "../drivers/include/screen.h"
 #include "../cpu/include/isr.h"
 #include "../libc/include/string.h"
+#include "../cpu/include/irq.h"
+#include "../cpu/include/idt.h"
+#include "../drivers/include/keyboard.h"
 
 void division_by_zero();
 void welcome_msg();
@@ -18,16 +21,18 @@ void kmain() {
 
     clear_screen();     //clear screen
     welcome_msg();      //print welcome message
-    isr_install();      //initialize ISRs
 
-    division_by_zero();
+    idt_init();
+    isr_install();      //initialize ISRs
+    irq_install();
+    keyboard_init();
+
+    //division_by_zero();
 
     
     //print("wow! we are back bro!");
-    char *string = "wow! we are back bro!\n";
-    print(string);
-    append(string, '?');
-    print(string);
+    //char *string = "wow! we are back bro!\n";
+    //print(string);
     
     //handle_scrolling();
 }

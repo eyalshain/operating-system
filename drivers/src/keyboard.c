@@ -24,6 +24,7 @@ u8bit key_count; // keys counter
 
 //keyboard state - ctrl, shift, alt, ...
 keyboard_state current_keyboard_state;
+keyboard_state specific_keyboard_state;
 
 
 void keyboard_init()
@@ -51,8 +52,22 @@ void keyboard_handler()
 
     else {
         //handle regular keys
-        //char character = scancode_ascii[(int)scancode]; // gets the ascii code for the character using our scancode table.
-        //print(character); //printing the character
+        if (!update_keyboard_state(scancode)) {return; } //if the key is ctrl/shift/... exit the function and move to the next key
+        
+        int is_capital = is_capital_letter(scancode);
+
+        char character = scancode_ascii[scancode][is_capital]; // gets the ascii code for the character using our scancode table.
+        char str[2] = {character, '\0'};
+
+        specific_keyboard_state = current_keyboard_state;
+        KeyEvent current_key = {scancode, character, specific_keyboard_state};
+        
+        buffer[key_count] = current_key;
+        key_count++;
+
+        
+        
+        print(str); //printing the character
 
     }
 
@@ -76,13 +91,39 @@ int update_keyboard_state(u8bit scancode)
         return 1;
     
     case CAPSLOCK_SCANCODE:
-        current_keyboard_state.is_capsLock_pressed = 1;
+        current_keyboard_state.is_capsLock_pressed = !current_keyboard_state.is_capsLock_pressed;
+        return 1;
     
     default:
         break;
     }
 
-
-
+    //to check if a key is released, we need to check if the scan code - 0x80 == to the target scan code.
     
+    if (scancode - RELEASE_CODE == CTRL_SCANCODE)
+    {
+        current_keyboard_state.is_ctrl_pressed = 0;
+        return 1;
+    }
+
+    if (scancode - RELEASE_CODE == SHIFT_SCANCODE)
+    {
+        current_keyboard_state.is_shift_pressed = 0;
+        return 1;
+    }
+
+    if (scancode - RELEASE_CODE == ALT_SCANCODE)
+    {
+        current_keyboard_state.is_alt_pressed = 0;
+        return 1;
+    }
+    
+
+    return 0;
+}
+
+
+int is_capital_letter()
+{
+    return (current_keyboard_state.is_capsLock_pressed ^ current_keyboard_state.is_shift_pressed) != 0;
 }

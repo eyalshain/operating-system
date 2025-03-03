@@ -51,6 +51,9 @@ void irq_install()
     idt_set_gate(IRQ13, (u32bit)irq13, KERNEL_CS, 0, INTERRUPT_GATE);
     idt_set_gate(IRQ14, (u32bit)irq14, KERNEL_CS, 0, INTERRUPT_GATE);
     idt_set_gate(IRQ15, (u32bit)irq14, KERNEL_CS, 0, INTERRUPT_GATE);
+    //asm volatile("sti");
+    //port_byte_out(0x21, port_byte_in(0x21) & ~0x02); 
+
 
 }
 

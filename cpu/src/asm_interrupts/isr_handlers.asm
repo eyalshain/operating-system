@@ -83,6 +83,6 @@ irq_common_stub:
 
     add esp, 4
 
-    jmp $
-    ;sti ;enabling interrupts
-    ;iret
+    ;jmp $
+    sti ;enabling interrupts
+    iret

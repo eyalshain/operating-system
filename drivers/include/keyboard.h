@@ -25,6 +25,7 @@ typedef struct {
 void keyboard_init();
 void keyboard_handler();
 int update_keyboard_state(u8bit scancode);
+int is_capital_letter();
 
 
 //scancode table: https://www.millisecond.com/support/docs/current/html/language/scancodes.htm
