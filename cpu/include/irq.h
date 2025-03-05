@@ -3,6 +3,21 @@
 
 #include "../types.h"
 
+
+// Master PIC ports
+#define PIC1_COMMAND 0x20  // Command port for Master PIC
+#define PIC1_DATA    0x21  // Data port for Master PIC
+
+// Slave PIC ports
+#define PIC2_COMMAND 0xA0  // Command port for Slave PIC
+#define PIC2_DATA    0xA1  // Data port for Slave PIC
+
+// PIC commands
+#define PIC_EOI      0x20  // End of interrupt command code
+
+
+
+
 #define IRQS 16
 
 extern void irq0();
@@ -43,6 +58,15 @@ extern void irq15();
 void irq_handler(u32bit entry);
 void irq_install();
 void irq_remap();
+void enable_irq(u8bit offset);
+void irq_unmask(int irq);
+
+void disable_irq(u8bit offset);
+void set_slave_IMR(u8bit imr);
+void set_master_IMR(u8bit imr);
+u8bit get_slave_IMR();
+u8bit get_master_IMR();
+
 
 
 #endif

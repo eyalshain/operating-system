@@ -17,7 +17,7 @@
 #define MAX_SCANCODE 58
 
 
-KeyEvent buffer[256] = {0}; //buffer to store all of the keys
+KeyEvent buffer[KEYBOARD_BUFFER_SIZE] = {0}; //buffer to store all of the keys
 u8bit key_count; // keys counter
 
 
@@ -40,6 +40,7 @@ void keyboard_init()
 
 void keyboard_handler()
 {
+    //print("Entered keyboard_handler successfully :) \n");
     //reading the character's scancode form port 0x60
     u8bit scancode = port_byte_in(0x60);
 
@@ -52,7 +53,7 @@ void keyboard_handler()
 
     else {
         //handle regular keys
-        if (!update_keyboard_state(scancode)) {return; } //if the key is ctrl/shift/... exit the function and move to the next key
+        if (update_keyboard_state(scancode) == 1) {return; } //if the key is ctrl/shift/... exit the function and move to the next key
         
         int is_capital = is_capital_letter(scancode);
 
@@ -63,7 +64,7 @@ void keyboard_handler()
         KeyEvent current_key = {scancode, character, specific_keyboard_state};
         
         buffer[key_count] = current_key;
-        key_count++;
+        key_count = (key_count + 1) % KEYBOARD_BUFFER_SIZE; //increase the keycounter by 1, but make sure that if it exceed the limit - reset the counter.
 
         
         
@@ -126,4 +127,9 @@ int update_keyboard_state(u8bit scancode)
 int is_capital_letter()
 {
     return (current_keyboard_state.is_capsLock_pressed ^ current_keyboard_state.is_shift_pressed) != 0;
+}
+
+void clean_buffer()
+{
+    
 }

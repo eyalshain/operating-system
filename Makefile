@@ -68,7 +68,7 @@ release: all
 
 
 #steps to debug:
-# 1.  /usr/local/cross/bin/i386-elf-gdb
+# 1.  /usr/local/cross/bin/i386-elf-gdb or gdb kernel.elf
 # 2.  target remote :1234
 # 3.  symbol-file kernel.elf
 # 4.  (optional) layout asm --> set disassembly-flavor intel

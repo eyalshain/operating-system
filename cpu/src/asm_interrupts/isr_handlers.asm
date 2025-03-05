@@ -68,7 +68,7 @@ irq_common_stub:
     mov fs, ax
     mov gs, ax 
 
-    mov eax, [tmp]
+    mov eax, [entry]
     push eax ;saving the interrupt vector, the entry in the idt array which the isr_handler gets as a parameter.
 
     call irq_handler    ;isr_handler - c function

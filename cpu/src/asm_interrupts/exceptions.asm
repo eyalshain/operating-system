@@ -104,6 +104,7 @@ isr12:
 
 isr13:
     cli
+    
     push dword 13               ;General Protection Fault
     jmp isr_common_stub
 
