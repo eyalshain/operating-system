@@ -8,7 +8,8 @@ void itoa(int num, char *str)
 
     if (num == 0) 
     {
-        str = "0";
+        str[0] = '0';
+        str[1] = '\0';
         return;
     }
 

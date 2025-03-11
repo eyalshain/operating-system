@@ -27,8 +27,8 @@ void kmain() {
     irq_install();
     keyboard_init();
 
-
     
+
 
     //__asm__ __volatile__("sti");
 

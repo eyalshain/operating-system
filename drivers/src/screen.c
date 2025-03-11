@@ -83,12 +83,13 @@ int print_char (char character, int row, int col, int attribute_byte)
 
 
 int handle_scrolling() {    //uses the cursor position automatically 
-    handle_scrolling(-1);
+    handle_scrolling_at(-1);
 }
 
 //if the cursor is out of video memory, scroll one line and  delete the top line.
 int handle_scrolling_at (int cursor_offset)
 {
+
     int max_bytes = 2 * ROWS * COLUMNS;
 
     if (cursor_offset < 0)  // use this in another function that doesn't get any parameter and automatically uses the cursor offset.
@@ -125,10 +126,19 @@ int handle_scrolling_at (int cursor_offset)
     //setting the cursor for the correct offset.
     set_cursor_offset(cursor_offset);
     
+    
     //returning the cursor offset.
     return cursor_offset;
 }
 
+char get_last_character()
+{
+    int current_offset = get_cursor_offset();
+    int key_offset = current_offset - 2;
+
+    char character = ((char*)VIDEO_MEMORY_LOCATION)[key_offset];
+    return character;
+}
 
 void clear_screen ()
 {

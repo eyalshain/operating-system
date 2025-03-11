@@ -85,6 +85,7 @@ void irq_handler(u32bit entry)
         break;
     
     case 1:
+        //handle_scrolling();
         keyboard_handler();
         break;
 

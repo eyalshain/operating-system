@@ -29,6 +29,7 @@ int handle_scrolling();
 int back_space();
 int tab();
 int new_line();
+char get_last_character();
 
 
 int get_screen_offset (int col, int row);
