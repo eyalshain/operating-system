@@ -27,7 +27,10 @@ void kmain() {
     irq_install();
     keyboard_init();
 
-    
+    char string1[] = "Hello1";
+    char string2[] = "Hello!";
+
+    print(itoa2(strcmp(string1, string2)));
 
 
     //__asm__ __volatile__("sti");
