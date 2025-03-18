@@ -1,6 +1,7 @@
 #include "shell.h"
 #include "../../libc/include/string.h"
 #include "../../drivers/include/screen.h"
+#include "../../drivers/include/keyboard.h"
 
 const char *prompt = "(EyalOS@)->$ ";
 
@@ -19,10 +20,23 @@ void execute_command(char *command)
         clear_screen();
     }
 
-    else if (strcmp(command, "echo"))
-    
+    else if (strncmp(command, "echo ", 5) == 0)
     {
+        print(command + 5);
+    }
 
+    else
+    {
+        print("\ncommand: ");
+        print("'");
+        print(command);
+        print("'");
+        print("is undefined");
     }
 
 }
+
+// char readChar()
+// {
+    
+// }

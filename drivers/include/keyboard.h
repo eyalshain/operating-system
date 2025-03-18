@@ -26,8 +26,12 @@ void keyboard_init();
 void keyboard_handler();
 int update_keyboard_state(u8bit scancode);
 int is_capital_letter();
-void clean_buffer();
+void print_key(u8bit scancode);
+void reset_keyboard_buffer();
 void handle_backspace();
+char key_to_ascii(KeyEvent key);
+KeyEvent get_last_event();
+u32bit ReadCommand(char *buf);
 
 
 //scancode table: https://www.millisecond.com/support/docs/current/html/language/scancodes.htm

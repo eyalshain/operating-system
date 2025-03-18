@@ -99,6 +99,7 @@ void append(char string[], char character)
 //return 0 if the strings are equal, if not return -1.
 int strcmp(char string1[], char string2[])
 {
+    //if the length of the strings are not equal return -1.
     if (strlen(string1) != strlen(string2)) {return -1;}
 
     //length of both strings
@@ -117,7 +118,9 @@ int strcmp(char string1[], char string2[])
 
 int strncmp(char string1[], char string2[], int bytes)
 {
-    if (strlen(string1) != strlen(string2)) {return -1;}
+    
+    //check if one of the strings length is smaller then bytes
+    if (strlen(string1) < bytes || strlen(string2) < bytes) {return -1;}
 
     for (int i = 0; i < bytes; i++)
     {

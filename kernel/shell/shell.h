@@ -4,6 +4,7 @@
 
 void execute_command(char *command);
 char readChar();
+void run_shell();
 
 
 #endif

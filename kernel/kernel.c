@@ -4,6 +4,7 @@
 #include "../cpu/include/irq.h"
 #include "../cpu/include/idt.h"
 #include "../drivers/include/keyboard.h"
+#include "shell/shell.h"
 
 void division_by_zero();
 void welcome_msg();
@@ -30,7 +31,7 @@ void kmain() {
     char string1[] = "Hello1";
     char string2[] = "Hello!";
 
-    print(itoa2(strcmp(string1, string2)));
+    
 
 
     //__asm__ __volatile__("sti");

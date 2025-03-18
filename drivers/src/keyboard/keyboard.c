@@ -1,7 +1,8 @@
-#include "../include/keyboard.h"
-#include "../include/memory_io.h"
-#include "../include/screen.h"
-#include "../../libc/include/string.h"
+#include "../../include/keyboard.h"
+#include "../../include/memory_io.h"
+#include "../../include/screen.h"
+#include "../../../libc/include/string.h"
+#include "../../../libc/include/memory.h"
 
 //the break code of a key = scancode of a key + 0x80. for example: shift-sc=0x2A. shift-release: 2A + 0x80 = 0xAA
 #define RELEASE_CODE 0x80 //the release code is used for checking if a key was released. the byte 0xF0 IS SENT TO PORT 0X60 and then the scan code of the character is also sent to port 0x60
@@ -19,6 +20,7 @@
 
 
 KeyEvent buffer[KEYBOARD_BUFFER_SIZE] = {0}; //buffer to store all of the keys
+char keys_buf[KEYBOARD_BUFFER_SIZE] = {0};
 u8bit key_count; // keys counter
 
 
@@ -44,14 +46,8 @@ void keyboard_handler()
 {
     // print("before handle_scrolling.");
     handle_scrolling();
-
     //reading the character's scancode form port 0x60
     u8bit scancode = port_byte_in(0x60);
-
-    // char *new;
-    // itoa(scancode, new);
-    // print(new);
-    // print(" ");
 
     if (update_keyboard_state(scancode) == 1) {return; } //if the key is ctrl/shift/... exit the function and move to the next key
 
@@ -65,29 +61,40 @@ void keyboard_handler()
 
     else {
         //handle regular keys
-        int is_capital = is_capital_letter(scancode);
-
-        char character = scancode_ascii[scancode][is_capital]; // gets the ascii code for the character using our scancode table.
-        char str[2] = {character, '\0'};
-
-        specific_keyboard_state = current_keyboard_state;
-        KeyEvent current_key = {scancode, character, specific_keyboard_state};
-        
-        buffer[key_count] = current_key;
-        key_count = (key_count + 1) % KEYBOARD_BUFFER_SIZE; //increase the keycounter by 1, but make sure that if it exceed the limit - reset the counter.
-
-        
-        print(str); //printing the character
-        // char *new_str;
-        // itoa(current_keyboard_state.is_shift_pressed, new_str);
-
-        // print(new_str);
-        // print(" ");
-        
-
+        print_key(scancode);
     }
 
 }
+
+//this function gets a scancode, update the global KeyEvent buffer and print the character.
+void print_key(u8bit scancode)
+{
+    
+    //checks if the letter is supposed to be uppercase.
+    int is_capital = is_capital_letter();
+
+    // gets the ascii code for the character using our scancode table.
+    char character = scancode_ascii[scancode][is_capital]; 
+    keys_buf[key_count] = character;
+    char str[2] = {character, '\0'};
+
+    //creating a 'KeyEvent' that will represent the current keyboard state
+    specific_keyboard_state = current_keyboard_state;
+    KeyEvent current_key = {scancode, character, specific_keyboard_state};
+    
+    //updating the buffer in the current.
+    buffer[key_count] = current_key;
+    key_count = (key_count + 1) % KEYBOARD_BUFFER_SIZE; //increase the keycounter by 1, but make sure that if it exceed the limit - reset the counter.
+
+    print("\nyoo");
+    print(str);
+    
+}
+
+
+
+
+
 
 int update_keyboard_state(u8bit scancode)
 {
@@ -153,7 +160,7 @@ int is_capital_letter()
 
 void handle_backspace()
 {   
-
+    
     int is_ctrl = current_keyboard_state.is_ctrl_pressed;
 
     switch(is_ctrl) {
@@ -181,7 +188,51 @@ void handle_backspace()
 }
 
 
-void clean_buffer()
+void reset_keyboard_buffer()
+{
+    memset(buffer, 0, KEYBOARD_BUFFER_SIZE);
+    key_count = 0;
+}
+
+
+KeyEvent get_last_event()
 {
     
+    if (key_count == 0)
+    {
+        return buffer[KEYBOARD_BUFFER_SIZE - 1];
+    }
+
+    return buffer[key_count-1];
+}
+
+char key_to_ascii(KeyEvent key)
+{
+    u8bit scancode = key.scancode;
+    int is_capital = (key.state.is_capsLock_pressed ^ key.state.is_shift_pressed) != 0;
+
+    char character = scancode_ascii[scancode][is_capital];
+
+    return character;
+}
+
+//this function read a command, puts it in buf and return the counter - how many letter have readed
+u32bit ReadCommand(char *buf)
+{
+    //reset_keyboard_buffer();
+
+    char character;
+    u32bit counter = 0;
+
+    // wait until the user press enter
+    while (get_last_event().ascii_code != '\n') {}
+
+    while (counter < KEYBOARD_BUFFER_SIZE && get_last_event().ascii_code != '\n')
+    {
+        buf[counter] = buffer[counter].ascii_code;
+        counter++;
+    }
+
+
+    return counter;
 }

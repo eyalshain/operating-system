@@ -1,4 +1,4 @@
-#include "../include/keyboard.h"
+#include "../../include/keyboard.h"
 
 char scancode_ascii[][2] = {
     {'?', '?'}, // 0 - No key

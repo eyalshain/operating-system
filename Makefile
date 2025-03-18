@@ -1,5 +1,5 @@
-C_SOURCE = $(wildcard kernel/*.c  drivers/src/*.c libc/src/*.c cpu/src/*.c)
-HEADERS = $(wildcard kernel/*.h drivers/include/*.h libc/include/*.h cpu/include/*.h cpu/types.h)
+C_SOURCE = $(wildcard kernel/shell/*.c kernel/*.c  drivers/src/*.c libc/src/*.c cpu/src/*.c drivers/src/keyboard/*.c)
+HEADERS = $(wildcard kernel/shell/*.h kernel/*.h drivers/include/*.h libc/include/*.h cpu/include/*.h cpu/types.h)
 ASM_SOURCES = $(wildcard cpu/src/asm_interrupts/*.asm)
 
 CROSS_COMPILER = /usr/local/cross/bin/i386-elf
@@ -54,7 +54,7 @@ boot/kernel_entry.o: boot/kernel_entry.asm
 # Clean build artifacts
 clean:
 	rm -fr build/*.bin build/*.o *.bin *.o os_image
-	rm -fr kernel/*.o boot/*.bin boot/*.o drivers/src/*.o cpu/src/*.o cpu/src/asm_interrupts/*.o libc/src/*.o  kernel.elf
+	rm -fr kernel/*.o boot/*.bin boot/*.o drivers/src/*.o cpu/src/*.o cpu/src/asm_interrupts/*.o libc/src/*.o  kernel/shell/*.o kernel.elf drivers/src/keyboard/*.o
 
 # Debug target: build with debugging symbols and run QEMU with GDB support
 debug: CFLAGS=$(DEBUG_CFLAGS)
