@@ -44,7 +44,6 @@ void keyboard_init()
 
 void keyboard_handler()
 {
-    // print("before handle_scrolling.");
     handle_scrolling();
     //reading the character's scancode form port 0x60
     u8bit scancode = port_byte_in(0x60);
@@ -63,6 +62,7 @@ void keyboard_handler()
         //handle regular keys
         print_key(scancode);
     }
+    //print("before handle_scrolling.\n");
 
 }
 
@@ -86,8 +86,8 @@ void print_key(u8bit scancode)
     buffer[key_count] = current_key;
     key_count = (key_count + 1) % KEYBOARD_BUFFER_SIZE; //increase the keycounter by 1, but make sure that if it exceed the limit - reset the counter.
 
-    print("\nyoo");
     print(str);
+    
     
 }
 
@@ -188,51 +188,51 @@ void handle_backspace()
 }
 
 
-void reset_keyboard_buffer()
-{
-    memset(buffer, 0, KEYBOARD_BUFFER_SIZE);
-    key_count = 0;
-}
+// void reset_keyboard_buffer()
+// {
+//     memset(buffer, 0, KEYBOARD_BUFFER_SIZE);
+//     key_count = 0;
+// }
 
 
-KeyEvent get_last_event()
-{
+// KeyEvent get_last_event()
+// {
     
-    if (key_count == 0)
-    {
-        return buffer[KEYBOARD_BUFFER_SIZE - 1];
-    }
+//     if (key_count == 0)
+//     {
+//         return buffer[KEYBOARD_BUFFER_SIZE - 1];
+//     }
 
-    return buffer[key_count-1];
-}
+//     return buffer[key_count-1];
+// }
 
-char key_to_ascii(KeyEvent key)
-{
-    u8bit scancode = key.scancode;
-    int is_capital = (key.state.is_capsLock_pressed ^ key.state.is_shift_pressed) != 0;
+// char key_to_ascii(KeyEvent key)
+// {
+//     u8bit scancode = key.scancode;
+//     int is_capital = (key.state.is_capsLock_pressed ^ key.state.is_shift_pressed) != 0;
 
-    char character = scancode_ascii[scancode][is_capital];
+//     char character = scancode_ascii[scancode][is_capital];
 
-    return character;
-}
+//     return character;
+// }
 
-//this function read a command, puts it in buf and return the counter - how many letter have readed
-u32bit ReadCommand(char *buf)
-{
-    //reset_keyboard_buffer();
+// //this function read a command, puts it in buf and return the counter - how many letter have readed
+// u32bit ReadCommand(char *buf)
+// {
+//     //reset_keyboard_buffer();
 
-    char character;
-    u32bit counter = 0;
+//     char character;
+//     u32bit counter = 0;
 
-    // wait until the user press enter
-    while (get_last_event().ascii_code != '\n') {}
+//     // wait until the user press enter
+//     while (get_last_event().ascii_code != '\n') {}
 
-    while (counter < KEYBOARD_BUFFER_SIZE && get_last_event().ascii_code != '\n')
-    {
-        buf[counter] = buffer[counter].ascii_code;
-        counter++;
-    }
+//     while (counter < KEYBOARD_BUFFER_SIZE && get_last_event().ascii_code != '\n')
+//     {
+//         buf[counter] = buffer[counter].ascii_code;
+//         counter++;
+//     }
 
 
-    return counter;
-}
+//     return counter;
+// }
