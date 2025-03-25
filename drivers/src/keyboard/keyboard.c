@@ -15,6 +15,7 @@
 #define BACKSPACE_SCANCODE 0x0E
 #define ENTER_SCANCODE 0x1C
 #define TAB_SCANCODE 0x0F
+#define SPACE_SCANCODE 0x39
 
 #define MAX_SCANCODE 58
 
@@ -57,6 +58,7 @@ void keyboard_handler()
     if (scancode == ENTER_SCANCODE) { new_line(); }
     else if (scancode == BACKSPACE_SCANCODE) { handle_backspace(); }
     else if (scancode == TAB_SCANCODE) { tab(); }
+    //else if (scancode == SPACE_SCANCODE) {print(" ");}
 
     else {
         //handle regular keys
