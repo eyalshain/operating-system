@@ -8,6 +8,7 @@ void append(char string[], char character);
 int strlen(char string[]);
 int strcmp(char string1[], char string2[]);
 int strncmp(char string1[], char string2[], int bytes);
+void print_hex(int num);
 
 
 #endif

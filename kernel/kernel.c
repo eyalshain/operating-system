@@ -5,6 +5,7 @@
 #include "../cpu/include/idt.h"
 #include "../drivers/include/keyboard.h"
 #include "shell/shell.h"
+#include "../drivers/include/scancode_table.h"
 
 void division_by_zero();
 void welcome_msg();
@@ -20,19 +21,24 @@ void kmain() {
         message += 1;
     }
 
-    clear_screen();     //clear screen
-    welcome_msg();      //print welcome message
-
     idt_init();
     isr_install();      //initialize ISRs
     irq_install();
     keyboard_init();
 
-    char string1[] = "Hello1";
-    char string2[] = "Hello!";
-
+    clear_screen();     //clear screen
+    welcome_msg();      //print welcome message
     
 
+
+    for (volatile int i = 0; i < 1000000; i++);
+
+
+    debug_scancode_table();
+
+
+    //char string1[] = "Hello1";
+    //char string2[] = "Hello!";
 
     //__asm__ __volatile__("sti");
 

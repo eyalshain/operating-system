@@ -1,3 +1,6 @@
+#ifndef SCREEN_H
+#define SCREEN_H
+
 // video memory starts at 0xb8000, but since we already wrote the pm message at that address, we'll start writing now at a little further address.
 //each row is 80 columns, and each cell is two byte, so to calclate the second row:
 //0xb8000 + 80*2 = 0xb80A0
@@ -35,3 +38,7 @@ char get_last_character();
 int get_screen_offset (int col, int row);
 int get_rows_offset (int offset);
 int get_columns_offset (int offset);
+
+
+
+#endif

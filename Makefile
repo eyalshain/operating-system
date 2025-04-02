@@ -13,7 +13,9 @@ GDB = $(CROSS_COMPILER)-gdb
 DEBUG_CFLAGS = -g -O0 -ffreestanding -m32 -fno-pic -Wall -Wextra
 
 # Release build flags
-RELEASE_CFLAGS = -g -ffreestanding -m32 -fno-pic
+RELEASE_CFLAGS = -g -ffreestanding -m32 -fno-pic -fno-builtin -nostdlib
+
+
 
 # Default to release build
 CFLAGS = $(RELEASE_CFLAGS)

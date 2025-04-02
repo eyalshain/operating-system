@@ -1,4 +1,5 @@
 #include "../include/string.h"
+#include "../../drivers/include/screen.h"
 
 #define MAX_STR_LEN 30
 
@@ -131,4 +132,17 @@ int strncmp(char string1[], char string2[], int bytes)
     }
 
     return 0;
+}
+
+void print_hex(int num) {
+    char hex_chars[] = "0123456789ABCDEF";
+    char buf[9]; // To hold 8 hex digits + null terminator
+    buf[8] = '\0'; // Null-terminate the string
+
+    for (int i = 7; i >= 0; i--) {
+        buf[i] = hex_chars[num % 16];
+        num /= 16;
+    }
+
+    print(buf); // Call the print function to display the hex string
 }

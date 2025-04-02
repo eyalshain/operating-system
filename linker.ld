@@ -4,24 +4,18 @@ SECTIONS
 {
     . = 0x1000;
 
-    .text :
-    {
+    /* Combined text and rodata */
+    .text : {
         *(.text)
+        *(.rodata*)
     }
 
-    .rodata :
-    {
-        *(.rodata)
-    }
-
-    .data :
-    {
+    .data : {
         *(.data)
     }
 
-    .bss :
-    {
-        *(.bss)
+    .bss : {
         *(COMMON)
+        *(.bss)
     }
 }

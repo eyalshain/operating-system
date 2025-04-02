@@ -1,6 +1,8 @@
 #include "../../include/keyboard.h"
+#include "../../../libc/include/string.h"
+#include "../../include/screen.h"
 
-char scancode_ascii[][2] = {
+__attribute__((used)) char scancode_ascii[][2] = {
     {'?', '?'}, // 0 - No key
     {'?', '?'}, // 1 - ESC
     {'1', '!'}, // 2 - 1 / !
@@ -61,3 +63,27 @@ char scancode_ascii[][2] = {
     {' ', ' '}, // 57 - Space
     {'?', '?'}  // 58 - Caps (Caps Lock)
 };
+
+void debug_scancode_table() {
+    print("entered debug function from scancode.c file.");
+
+    
+    // char buf[2]; // Buffer to hold a single character + null terminator
+
+    // for (int i = 0; i < 59; i++) {
+    //     print("Scancode ");
+    //     //print_hex(i); // Print scancode index
+    //     print(": ");
+
+    //     buf[0] = scancode_ascii[i][0]; // Store first character
+    //     buf[1] = '\0'; // Null-terminate
+    //     print(buf); // Print correctly
+
+    //     print(", ");
+
+    //     buf[0] = scancode_ascii[i][1]; // Store second character
+    //     print(buf); // Print correctly
+
+    //     print("\n\n");
+    // }
+}

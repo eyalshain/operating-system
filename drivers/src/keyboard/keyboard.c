@@ -3,6 +3,7 @@
 #include "../../include/screen.h"
 #include "../../../libc/include/string.h"
 #include "../../../libc/include/memory.h"
+#include "../../include/scancode_table.h"
 
 //the break code of a key = scancode of a key + 0x80. for example: shift-sc=0x2A. shift-release: 2A + 0x80 = 0xAA
 #define RELEASE_CODE 0x80 //the release code is used for checking if a key was released. the byte 0xF0 IS SENT TO PORT 0X60 and then the scan code of the character is also sent to port 0x60
@@ -18,6 +19,7 @@
 #define SPACE_SCANCODE 0x39
 
 #define MAX_SCANCODE 58
+
 
 
 KeyEvent buffer[KEYBOARD_BUFFER_SIZE] = {0}; //buffer to store all of the keys
@@ -45,27 +47,26 @@ void keyboard_init()
 
 void keyboard_handler()
 {
+    
     handle_scrolling();
     //reading the character's scancode form port 0x60
     u8bit scancode = port_byte_in(0x60);
 
+    
     if (update_keyboard_state(scancode) == 1) {return; } //if the key is ctrl/shift/... exit the function and move to the next key
 
     //if the scancode is bigger than the max scancode (+ 0x80, for key releases.)
     if (scancode > MAX_SCANCODE) return;
 
     //handle scancodes.
-    if (scancode == ENTER_SCANCODE) { new_line(); }
-    else if (scancode == BACKSPACE_SCANCODE) { handle_backspace(); }
-    else if (scancode == TAB_SCANCODE) { tab(); }
-    //else if (scancode == SPACE_SCANCODE) {print(" ");}
-
-    else {
-        //handle regular keys
-        print_key(scancode);
+    
+    switch(scancode) {
+        case ENTER_SCANCODE:  new_line(); break;
+        case BACKSPACE_SCANCODE: handle_backspace(); break;
+        case TAB_SCANCODE: tab(); break;  // 4 spaces for tab
+        case SPACE_SCANCODE: print(" "); break;
+        default: print_key(scancode);  // Normal keys
     }
-    //print("before handle_scrolling.\n");
-
 }
 
 //this function gets a scancode, update the global KeyEvent buffer and print the character.
@@ -88,8 +89,10 @@ void print_key(u8bit scancode)
     buffer[key_count] = current_key;
     key_count = (key_count + 1) % KEYBOARD_BUFFER_SIZE; //increase the keycounter by 1, but make sure that if it exceed the limit - reset the counter.
 
+
     print(str);
     
+
     
 }
 

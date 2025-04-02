@@ -72,7 +72,7 @@ void irq_handler(u32bit entry)
     char *irq_str;
     itoa(irq_number, irq_str);
     
-    // print("irq number: ");
+    
     // print(irq_str);
     // //print("\n");
     
